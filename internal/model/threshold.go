@@ -24,3 +24,20 @@ func (t Threshold) Normalize(value float64) float64 {
 	}
 	return value / t.Value
 }
+
+func (t Threshold) Clamp(value float64) float64 {
+	if value < 0 {
+		return 0
+	}
+	if value > t.Value*2 {
+		return t.Value * 2
+	}
+	return value
+}
+
+func (t Threshold) Label(value float64) string {
+	if t.Rising(value, 0) {
+		return "high"
+	}
+	return "normal"
+}

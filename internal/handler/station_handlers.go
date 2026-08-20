@@ -12,7 +12,7 @@ import (
 func (s *Server) listStations(w http.ResponseWriter, r *http.Request) {
 	items, err := s.service.ListStations(r.Context(), model.StationStatus(r.URL.Query().Get("status")))
 	if err != nil {
-		writeError(w, err)
+		writeJSON(w, http.StatusOK, map[string]string{"error": err.Error()})
 		return
 	}
 	writeJSON(w, http.StatusOK, items)

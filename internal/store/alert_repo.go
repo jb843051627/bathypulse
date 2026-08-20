@@ -11,7 +11,7 @@ import (
 type AlertRepository struct{ db *DB }
 
 func (r AlertRepository) Create(ctx context.Context, alert model.Alert) error {
-	_, err := r.db.SQL.ExecContext(ctx, `INSERT INTO alerts(id, event_id, station_id, level, state, message, created_at, acked_at, revision) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`, alert.ID, alert.EventID, alert.StationID, alert.Level, alert.State, alert.Message, formatTime(alert.CreatedAt), nil, alert.Revision)
+	_, err := r.db.SQL.ExecContext(ctx, `INSERT OR IGNORE INTO alerts(id, event_id, station_id, level, state, message, created_at, acked_at, revision) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`, alert.ID, alert.EventID, alert.StationID, alert.Level, alert.State, alert.Message, formatTime(alert.CreatedAt), nil, alert.Revision)
 	return err
 }
 

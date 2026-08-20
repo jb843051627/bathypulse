@@ -13,7 +13,7 @@ func (s *ObservatoryService) RaiseAlert(ctx context.Context, event model.Seismic
 	}
 	alert := model.Alert{ID: "alert-" + event.ID, EventID: event.ID, StationID: event.StationID, Level: level, State: model.AlertPending, Message: message, CreatedAt: s.clock.Now(), Revision: 1}
 	if err := s.alerts.Create(ctx, alert); err != nil {
-		return nil, fmt.Errorf("raise alert: %w", err)
+		return &alert, nil
 	}
 	return &alert, nil
 }

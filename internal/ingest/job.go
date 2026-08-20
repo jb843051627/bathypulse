@@ -8,9 +8,9 @@ import (
 )
 
 type Job struct {
-	Context context.Context
-	Batch   model.SampleBatch
-	Created time.Time
+	Context  context.Context
+	Batch    model.SampleBatch
+	QueuedAt time.Time
 }
 
 type Handler interface {

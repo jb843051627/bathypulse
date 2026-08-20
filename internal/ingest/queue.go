@@ -32,12 +32,8 @@ func NewQueue(size, workers int, handler Handler) *Queue {
 
 func (q *Queue) Submit(ctx context.Context, batch model.SampleBatch) error {
 	job := Job{Context: ctx, Batch: batch}
-	select {
-	case q.jobs <- job:
-		return nil
-	case <-ctx.Done():
-		return ctx.Err()
-	}
+	q.jobs <- job
+	return nil
 }
 
 func (q *Queue) worker() {

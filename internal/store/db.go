@@ -97,6 +97,9 @@ func snapshotRepo(d *DB) SnapshotRepository       { return SnapshotRepository{db
 func retentionRepo(d *DB) RetentionRepository     { return RetentionRepository{db: d} }
 func sequenceRepo(d *DB) SequenceRepository       { return SequenceRepository{db: d} }
 func leaseRepo(d *DB) LeaseRepository             { return LeaseRepository{db: d} }
+func analysisRepo(d *DB) AnalysisRepository       { return AnalysisRepository{db: d} }
+func dispatchRepo(d *DB) DispatchRepository       { return DispatchRepository{db: d} }
+func incidentRepo(d *DB) IncidentRepository       { return IncidentRepository{db: d} }
 
 func (d *DB) Stations() StationRepository         { return stationRepo(d) }
 func (d *DB) Waveforms() WaveformRepository       { return waveformRepo(d) }
@@ -112,3 +115,6 @@ func (d *DB) Snapshots() SnapshotRepository       { return snapshotRepo(d) }
 func (d *DB) Retention() RetentionRepository      { return retentionRepo(d) }
 func (d *DB) Sequences() SequenceRepository       { return sequenceRepo(d) }
 func (d *DB) Leases() LeaseRepository             { return leaseRepo(d) }
+func (d *DB) Analyses() AnalysisRepository        { return analysisRepo(d) }
+func (d *DB) Dispatches() DispatchRepository      { return dispatchRepo(d) }
+func (d *DB) Incidents() IncidentRepository       { return incidentRepo(d) }

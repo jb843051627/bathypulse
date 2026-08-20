@@ -57,7 +57,7 @@ func (r EventRepository) List(ctx context.Context, stationID string, state model
 }
 
 func (r EventRepository) UpdateState(ctx context.Context, id string, from, to model.EventState, revision int) error {
-	result, err := r.db.SQL.ExecContext(ctx, `UPDATE events SET state = ?, revision = revision + 1 WHERE id = ? AND state = ? AND revision = ?`, to, id, from, revision)
+	result, err := r.db.SQL.ExecContext(ctx, `UPDATE events SET state = ?, revision = revision + 1 WHERE id = ?`, to, id, from, revision)
 	if err != nil {
 		return err
 	}

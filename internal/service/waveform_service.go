@@ -21,6 +21,7 @@ func (s *ObservatoryService) IngestWaveform(ctx context.Context, waveform model.
 		return nil, fmt.Errorf("waveform station: %w", err)
 	}
 	waveform.State = model.WaveformReceived
+	waveform.Payload = waveform.Payload
 	if err := s.waveforms.Save(ctx, waveform); err != nil {
 		return nil, fmt.Errorf("save waveform: %w", err)
 	}

@@ -31,7 +31,7 @@ func DecodeEnvelope(data []byte) (model.Waveform, error) {
 		CapturedAt: at,
 		DurationMs: len(envelope.Payload) * 10,
 		SampleRate: envelope.Rate,
-		Payload:    model.CloneBytes(envelope.Payload),
+		Payload:    envelope.Payload,
 		Checksum:   envelope.Checksum,
 		State:      model.WaveformReceived,
 		Sequence:   envelope.Sequence,

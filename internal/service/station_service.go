@@ -41,6 +41,7 @@ func (s *ObservatoryService) UpdateHeartbeat(ctx context.Context, id string, lat
 		return fmt.Errorf("store station heartbeat: %w", err)
 	}
 	s.metrics.ObserveStation(id, latency)
+	s.metrics.Add("station.heartbeat.events", 1)
 	return nil
 }
 

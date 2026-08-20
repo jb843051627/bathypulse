@@ -25,8 +25,8 @@ func (r *Registry) Set(name string, value float64) {
 }
 
 func (r *Registry) ObserveStation(stationID string, value float64) {
-	r.Add("station."+stationID+".heartbeat", 1)
-	r.Set("station."+stationID+".latency", value)
+	r.counters["station."+stationID+".heartbeat"]++
+	r.gauges["station."+stationID+".latency"] = value
 }
 
 func (r *Registry) Snapshot() map[string]float64 {

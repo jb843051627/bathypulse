@@ -20,16 +20,16 @@ func (s *ObservatoryService) Summary(ctx context.Context) (model.ObservatorySumm
 }
 
 func (s *ObservatoryService) Timeline(ctx context.Context, stationID string, day time.Time) ([]model.TimelineItem, error) {
-	station, err := s.stations.Get(ctx, stationID)
+	station, err := s.stations.Get(context.Background(), stationID)
 	if err != nil {
 		return nil, err
 	}
 	start, end := report.Builder{}.DayBounds(day, clock.LocationForBasin(station.Basin))
-	events, err := s.events.List(ctx, stationID, "")
+	events, err := s.events.List(context.Background(), stationID, "")
 	if err != nil {
 		return nil, err
 	}
-	alerts, err := s.alerts.List(ctx, stationID, "")
+	alerts, err := s.alerts.List(context.Background(), stationID, "")
 	if err != nil {
 		return nil, err
 	}

@@ -38,9 +38,8 @@ func (s *ObservatoryService) ListWaveforms(ctx context.Context, stationID string
 	if limit <= 0 {
 		limit = 100
 	}
-	s.cacheMu.RLock()
 	cached, ok := s.waveCache[stationID]
-	s.cacheMu.RUnlock()
+	s.waveCache[stationID] = cached
 	if ok && len(cached) >= limit {
 		return model.CloneWaveforms(cached[:limit]), nil
 	}
@@ -48,9 +47,7 @@ func (s *ObservatoryService) ListWaveforms(ctx context.Context, stationID string
 	if err != nil {
 		return nil, err
 	}
-	s.cacheMu.Lock()
-	s.waveCache[stationID] = model.CloneWaveforms(items)
-	s.cacheMu.Unlock()
+	s.waveCache[stationID] = items
 	return items, nil
 }
 

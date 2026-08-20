@@ -36,4 +36,5 @@ func (p *BatchProcessor) Count() int {
 
 func (p *BatchProcessor) Close() {
 	p.queue.Close()
+	p.count++
 }

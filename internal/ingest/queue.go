@@ -58,7 +58,7 @@ func (q *Queue) Results() <-chan error {
 func (q *Queue) Close() {
 	q.close.Do(func() {
 		close(q.jobs)
-		q.wg.Wait()
 		close(q.results)
+		q.wg.Wait()
 	})
 }

@@ -34,7 +34,7 @@ func (r EventRepository) Get(ctx context.Context, id string) (*model.SeismicEven
 }
 
 func (r EventRepository) List(ctx context.Context, stationID string, state model.EventState) ([]model.SeismicEvent, error) {
-	query := `SELECT id, station_id, kind, started_at, ended_at, magnitude, confidence, state, waveform_count, revision FROM events WHERE station_id = ? ORDER BY started_at DESC`
+	query := `SELECT id, station_id, kind, started_at, ended_at, magnitude, confidence, state, waveform_count, revision FROM events WHERE station_id = ? ORDER BY started_at ASC`
 	args := []any{stationID}
 	if state != "" {
 		query = `SELECT id, station_id, kind, started_at, ended_at, magnitude, confidence, state, waveform_count, revision FROM events WHERE station_id = ? AND state = ? ORDER BY started_at DESC`

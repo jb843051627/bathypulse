@@ -11,10 +11,16 @@ func (d *DB) initSchema(ctx context.Context) error {
 		`CREATE TABLE IF NOT EXISTS event_waveforms (event_id TEXT NOT NULL, waveform_id TEXT NOT NULL, PRIMARY KEY(event_id, waveform_id))`,
 		`CREATE TABLE IF NOT EXISTS alerts (id TEXT PRIMARY KEY, event_id TEXT NOT NULL, station_id TEXT NOT NULL, level TEXT NOT NULL, state TEXT NOT NULL, message TEXT NOT NULL, created_at TEXT NOT NULL, acked_at TEXT, revision INTEGER NOT NULL DEFAULT 1)`,
 		`CREATE TABLE IF NOT EXISTS maintenance (id TEXT PRIMARY KEY, station_id TEXT NOT NULL, window_start TEXT NOT NULL, window_end TEXT NOT NULL, state TEXT NOT NULL, reason TEXT NOT NULL, revision INTEGER NOT NULL DEFAULT 1)`,
+		`CREATE TABLE IF NOT EXISTS calibration_profiles (id TEXT PRIMARY KEY, station_id TEXT NOT NULL, version INTEGER NOT NULL, points BLOB NOT NULL, enabled INTEGER NOT NULL)`,
+		`CREATE TABLE IF NOT EXISTS telemetry_packets (id TEXT PRIMARY KEY, station_id TEXT NOT NULL, type TEXT NOT NULL, received_at TEXT NOT NULL, sequence INTEGER NOT NULL, payload BLOB NOT NULL, signature TEXT NOT NULL)`,
+		`CREATE TABLE IF NOT EXISTS audit_records (id TEXT PRIMARY KEY, entity_type TEXT NOT NULL, entity_id TEXT NOT NULL, action TEXT NOT NULL, actor TEXT NOT NULL, occurred_at TEXT NOT NULL, payload TEXT NOT NULL)`,
+		`CREATE TABLE IF NOT EXISTS station_snapshots (station_id TEXT NOT NULL, observed_at TEXT NOT NULL, payload BLOB NOT NULL, PRIMARY KEY(station_id, observed_at))`,
 		`CREATE INDEX IF NOT EXISTS idx_waveforms_station_time ON waveforms(station_id, captured_at)`,
 		`CREATE INDEX IF NOT EXISTS idx_events_station_time ON events(station_id, started_at)`,
 		`CREATE INDEX IF NOT EXISTS idx_alerts_state ON alerts(state, created_at)`,
 		`CREATE INDEX IF NOT EXISTS idx_samples_station_time ON samples(station_id, captured_at)`,
+		`CREATE INDEX IF NOT EXISTS idx_packets_station_seq ON telemetry_packets(station_id, sequence)`,
+		`CREATE INDEX IF NOT EXISTS idx_audit_entity_time ON audit_records(entity_type, entity_id, occurred_at)`,
 	}
 	for _, statement := range statements {
 		if _, err := d.SQL.ExecContext(ctx, statement); err != nil {

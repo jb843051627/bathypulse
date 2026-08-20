@@ -90,11 +90,19 @@ func alertRepo(d *DB) AlertRepository             { return AlertRepository{db: d
 func maintenanceRepo(d *DB) MaintenanceRepository { return MaintenanceRepository{db: d} }
 func sampleRepo(d *DB) SampleRepository           { return SampleRepository{db: d} }
 func queryRepo(d *DB) QueryRepository             { return QueryRepository{db: d} }
+func calibrationRepo(d *DB) CalibrationRepository { return CalibrationRepository{db: d} }
+func packetRepo(d *DB) PacketRepository           { return PacketRepository{db: d} }
+func auditRepo(d *DB) AuditRepository             { return AuditRepository{db: d} }
+func snapshotRepo(d *DB) SnapshotRepository       { return SnapshotRepository{db: d} }
 
-func (d *DB) Stations() StationRepository        { return stationRepo(d) }
-func (d *DB) Waveforms() WaveformRepository      { return waveformRepo(d) }
-func (d *DB) Events() EventRepository            { return eventRepo(d) }
-func (d *DB) Alerts() AlertRepository            { return alertRepo(d) }
-func (d *DB) Maintenance() MaintenanceRepository { return maintenanceRepo(d) }
-func (d *DB) Samples() SampleRepository          { return sampleRepo(d) }
-func (d *DB) Queries() QueryRepository           { return queryRepo(d) }
+func (d *DB) Stations() StationRepository         { return stationRepo(d) }
+func (d *DB) Waveforms() WaveformRepository       { return waveformRepo(d) }
+func (d *DB) Events() EventRepository             { return eventRepo(d) }
+func (d *DB) Alerts() AlertRepository             { return alertRepo(d) }
+func (d *DB) Maintenance() MaintenanceRepository  { return maintenanceRepo(d) }
+func (d *DB) Samples() SampleRepository           { return sampleRepo(d) }
+func (d *DB) Queries() QueryRepository            { return queryRepo(d) }
+func (d *DB) Calibrations() CalibrationRepository { return calibrationRepo(d) }
+func (d *DB) Packets() PacketRepository           { return packetRepo(d) }
+func (d *DB) Audits() AuditRepository             { return auditRepo(d) }
+func (d *DB) Snapshots() SnapshotRepository       { return snapshotRepo(d) }

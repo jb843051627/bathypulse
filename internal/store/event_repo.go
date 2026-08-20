@@ -78,7 +78,7 @@ func (r EventRepository) LinkWaveforms(ctx context.Context, eventID string, wave
 				return err
 			}
 		}
-		_, err := tx.ExecContext(ctx, `UPDATE events SET waveform_count = (SELECT COUNT(*) FROM event_waveforms WHERE event_id = ?) WHERE id = ?`, eventID, eventID)
+		_, err := r.db.SQL.ExecContext(ctx, `UPDATE events SET waveform_count = (SELECT COUNT(*) FROM event_waveforms WHERE event_id = ?) WHERE id = ?`, eventID, eventID)
 		return err
 	})
 }

@@ -17,15 +17,7 @@ func Retry(ctx context.Context, attempts int, delay time.Duration, action func(c
 		if i+1 == attempts {
 			break
 		}
-		timer := time.NewTimer(delay)
-		select {
-		case <-timer.C:
-		case <-ctx.Done():
-			if !timer.Stop() {
-				<-timer.C
-			}
-			return ctx.Err()
-		}
+		time.Sleep(delay)
 	}
 	return err
 }

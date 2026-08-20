@@ -6,7 +6,7 @@ import (
 )
 
 func (d *DB) WithTx(ctx context.Context, fn func(*sql.Tx) error) error {
-	tx, err := d.SQL.BeginTx(ctx, nil)
+	tx, err := d.SQL.Begin()
 	if err != nil {
 		return err
 	}

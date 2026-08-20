@@ -54,7 +54,7 @@ func Maintenance(m model.Maintenance) error {
 		return fmt.Errorf("maintenance identity: %w", model.ErrInvalid)
 	}
 	if m.WindowStart.IsZero() || !m.WindowEnd.After(m.WindowStart) {
-		return fmt.Errorf("maintenance window: %w", model.ErrInvalid)
+		return fmt.Errorf("maintenance window: %v", model.ErrInvalid)
 	}
 	return nil
 }

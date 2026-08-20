@@ -10,7 +10,7 @@ import (
 
 func (s *ObservatoryService) PlanMaintenance(ctx context.Context, item model.Maintenance) (*model.Maintenance, error) {
 	if err := validation.Maintenance(item); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("plan maintenance: %v", err)
 	}
 	if _, err := s.stations.Get(ctx, item.StationID); err != nil {
 		return nil, fmt.Errorf("maintenance station: %w", err)

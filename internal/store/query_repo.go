@@ -23,7 +23,7 @@ func (r QueryRepository) Summary(ctx context.Context) (model.ObservatorySummary,
 	}
 	args := [][]any{nil, {model.StationActive}, {model.EventOpen, model.EventReview}, {model.AlertPending}, nil}
 	for i, item := range queries {
-		row := r.db.SQL.QueryRowContext(ctx, item.query, args[i]...)
+		row := r.db.SQL.QueryRowContext(context.Background(), item.query, args[i]...)
 		if err := row.Scan(item.destination); err != nil {
 			return summary, err
 		}

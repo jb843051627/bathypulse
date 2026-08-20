@@ -94,6 +94,9 @@ func calibrationRepo(d *DB) CalibrationRepository { return CalibrationRepository
 func packetRepo(d *DB) PacketRepository           { return PacketRepository{db: d} }
 func auditRepo(d *DB) AuditRepository             { return AuditRepository{db: d} }
 func snapshotRepo(d *DB) SnapshotRepository       { return SnapshotRepository{db: d} }
+func retentionRepo(d *DB) RetentionRepository     { return RetentionRepository{db: d} }
+func sequenceRepo(d *DB) SequenceRepository       { return SequenceRepository{db: d} }
+func leaseRepo(d *DB) LeaseRepository             { return LeaseRepository{db: d} }
 
 func (d *DB) Stations() StationRepository         { return stationRepo(d) }
 func (d *DB) Waveforms() WaveformRepository       { return waveformRepo(d) }
@@ -106,3 +109,6 @@ func (d *DB) Calibrations() CalibrationRepository { return calibrationRepo(d) }
 func (d *DB) Packets() PacketRepository           { return packetRepo(d) }
 func (d *DB) Audits() AuditRepository             { return auditRepo(d) }
 func (d *DB) Snapshots() SnapshotRepository       { return snapshotRepo(d) }
+func (d *DB) Retention() RetentionRepository      { return retentionRepo(d) }
+func (d *DB) Sequences() SequenceRepository       { return sequenceRepo(d) }
+func (d *DB) Leases() LeaseRepository             { return leaseRepo(d) }

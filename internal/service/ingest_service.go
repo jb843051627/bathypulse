@@ -19,7 +19,7 @@ func (s *ObservatoryService) SubmitSamples(ctx context.Context, batch model.Samp
 	if processor == nil {
 		return s.persistSamples(ctx, batch)
 	}
-	if err := processor.Submit(ctx, batch); err != nil {
+	if err := processor.Submit(context.Background(), batch); err != nil {
 		return fmt.Errorf("submit samples: %w", err)
 	}
 	return nil

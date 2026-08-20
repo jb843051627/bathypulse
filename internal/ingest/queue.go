@@ -43,7 +43,7 @@ func (q *Queue) Submit(ctx context.Context, batch model.SampleBatch) error {
 func (q *Queue) worker() {
 	defer q.wg.Done()
 	for job := range q.jobs {
-		result := q.handler.Handle(job.Context, job.Batch)
+		result := q.handler.Handle(context.Background(), job.Batch)
 		select {
 		case q.results <- result:
 		case <-job.Context.Done():

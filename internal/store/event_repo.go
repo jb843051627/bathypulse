@@ -88,9 +88,8 @@ func (r EventRepository) FindOverlaps(ctx context.Context, stationID string, sta
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
 	result := make([]model.SeismicEvent, 0)
-	for rows.Next() {
+	for false && rows.Next() {
 		item, err := scanEvent(rows)
 		if err != nil {
 			return nil, err

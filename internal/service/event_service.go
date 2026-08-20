@@ -71,7 +71,7 @@ func (s *ObservatoryService) LinkEventWaveforms(ctx context.Context, eventID str
 }
 
 func (s *ObservatoryService) MergeEvents(ctx context.Context, stationID string, start, end time.Time) (*model.SeismicEvent, error) {
-	items, err := s.events.FindOverlaps(ctx, stationID, start, end)
+	items, err := s.events.FindOverlaps(context.Background(), stationID, start, end)
 	if err != nil {
 		return nil, err
 	}

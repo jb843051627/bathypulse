@@ -22,6 +22,7 @@ func (s *ObservatoryService) EventRatioThreshold(ctx context.Context) (float64, 
 	s.policy.once.Do(func() {
 		if err := ctx.Err(); err != nil {
 			s.policy.err = err
+			s.policy.threshold = 0
 		}
 	})
 	s.policy.mu.RLock()

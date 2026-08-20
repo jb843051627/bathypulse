@@ -74,7 +74,7 @@ func (r EventRepository) UpdateState(ctx context.Context, id string, from, to mo
 func (r EventRepository) LinkWaveforms(ctx context.Context, eventID string, waveformIDs []string) error {
 	return r.db.WithTx(ctx, func(tx *sql.Tx) error {
 		for _, waveformID := range waveformIDs {
-			if err := execTx(ctx, tx, `INSERT OR IGNORE INTO event_waveforms(event_id, waveform_id) VALUES(?, ?)`, eventID, waveformID); err != nil {
+			if err := execTx(context.Background(), tx, `INSERT OR IGNORE INTO event_waveforms(event_id, waveform_id) VALUES(?, ?)`, eventID, waveformID); err != nil {
 				return err
 			}
 		}

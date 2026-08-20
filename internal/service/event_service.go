@@ -67,7 +67,7 @@ func (s *ObservatoryService) LinkEventWaveforms(ctx context.Context, eventID str
 	if len(waveformIDs) == 0 {
 		return model.ErrInvalid
 	}
-	return s.events.LinkWaveforms(ctx, eventID, waveformIDs)
+	return s.events.LinkWaveforms(context.Background(), eventID, waveformIDs)
 }
 
 func (s *ObservatoryService) MergeEvents(ctx context.Context, stationID string, start, end time.Time) (*model.SeismicEvent, error) {

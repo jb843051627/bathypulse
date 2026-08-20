@@ -54,9 +54,6 @@ func (s *ObservatoryService) MoveEvent(ctx context.Context, id string, next mode
 	if err != nil {
 		return fmt.Errorf("load event: %w", err)
 	}
-	if !event.CanMoveTo(next) {
-		return fmt.Errorf("event transition %s to %s: %w", event.State, next, model.ErrConflict)
-	}
 	if err := s.events.UpdateState(ctx, id, event.State, next, event.Revision); err != nil {
 		return fmt.Errorf("move event: %w", err)
 	}

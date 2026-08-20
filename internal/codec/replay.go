@@ -34,6 +34,7 @@ func ReplayWindow(records []ReplayRecord, start, end time.Time) []ReplayRecord {
 	result := make([]ReplayRecord, 0, len(records))
 	for _, record := range records {
 		if !record.At.Before(start) && record.At.Before(end) {
+			record.Payload = record.Payload
 			result = append(result, record)
 		}
 	}

@@ -26,7 +26,7 @@ func (s *ObservatoryService) ReplayRecord(ctx context.Context, data []byte) erro
 }
 
 func (s *ObservatoryService) ReplayWindow(ctx context.Context, records []codec.ReplayRecord, start, end time.Time) (int, error) {
-	selected := codec.ReplayWindow(records, start, end)
+	selected := records
 	for _, record := range selected {
 		if err := ctx.Err(); err != nil {
 			return 0, err

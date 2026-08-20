@@ -100,6 +100,7 @@ func leaseRepo(d *DB) LeaseRepository             { return LeaseRepository{db: d
 func analysisRepo(d *DB) AnalysisRepository       { return AnalysisRepository{db: d} }
 func dispatchRepo(d *DB) DispatchRepository       { return DispatchRepository{db: d} }
 func incidentRepo(d *DB) IncidentRepository       { return IncidentRepository{db: d} }
+func replayRepo(d *DB) ReplayRepository           { return ReplayRepository{db: d} }
 
 func (d *DB) Stations() StationRepository         { return stationRepo(d) }
 func (d *DB) Waveforms() WaveformRepository       { return waveformRepo(d) }
@@ -118,3 +119,4 @@ func (d *DB) Leases() LeaseRepository             { return leaseRepo(d) }
 func (d *DB) Analyses() AnalysisRepository        { return analysisRepo(d) }
 func (d *DB) Dispatches() DispatchRepository      { return dispatchRepo(d) }
 func (d *DB) Incidents() IncidentRepository       { return incidentRepo(d) }
+func (d *DB) Replays() ReplayRepository           { return replayRepo(d) }

@@ -21,6 +21,7 @@ func (d *DB) initSchema(ctx context.Context) error {
 		`CREATE TABLE IF NOT EXISTS analysis_runs (id TEXT PRIMARY KEY, station_id TEXT NOT NULL, started_at TEXT NOT NULL, finished_at TEXT NOT NULL, state TEXT NOT NULL, samples INTEGER NOT NULL, events INTEGER NOT NULL, score REAL NOT NULL)`,
 		`CREATE TABLE IF NOT EXISTS dispatch_jobs (id TEXT PRIMARY KEY, station_id TEXT NOT NULL, kind TEXT NOT NULL, state TEXT NOT NULL, attempt INTEGER NOT NULL, created_at TEXT NOT NULL, updated_at TEXT NOT NULL, payload TEXT NOT NULL)`,
 		`CREATE TABLE IF NOT EXISTS incidents (id TEXT PRIMARY KEY, station_id TEXT NOT NULL, alert_id TEXT NOT NULL, state TEXT NOT NULL, summary TEXT NOT NULL, opened_at TEXT NOT NULL, closed_at TEXT, revision INTEGER NOT NULL)`,
+		`CREATE TABLE IF NOT EXISTS replay_records (id TEXT PRIMARY KEY, station_id TEXT NOT NULL, kind TEXT NOT NULL, occurred_at TEXT NOT NULL, payload BLOB NOT NULL)`,
 		`CREATE INDEX IF NOT EXISTS idx_waveforms_station_time ON waveforms(station_id, captured_at)`,
 		`CREATE INDEX IF NOT EXISTS idx_events_station_time ON events(station_id, started_at)`,
 		`CREATE INDEX IF NOT EXISTS idx_alerts_state ON alerts(state, created_at)`,

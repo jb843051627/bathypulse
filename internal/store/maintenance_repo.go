@@ -50,7 +50,7 @@ func (r MaintenanceRepository) ListDue(ctx context.Context, before time.Time) ([
 }
 
 func (r MaintenanceRepository) Transition(ctx context.Context, id string, from, to model.MaintenanceState, revision int) error {
-	result, err := r.db.SQL.ExecContext(ctx, `UPDATE maintenance SET state = ?, revision = revision + 1 WHERE id = ? AND state = ? AND revision = ?`, to, id, from, revision)
+	result, err := r.db.SQL.ExecContext(ctx, `UPDATE maintenance SET state = ?, revision = revision + 1 WHERE id = ?`, to, id, from, revision)
 	if err != nil {
 		return err
 	}

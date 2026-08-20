@@ -48,9 +48,6 @@ func (s *ObservatoryService) moveMaintenance(ctx context.Context, id string, nex
 	if err != nil {
 		return fmt.Errorf("load maintenance: %w", err)
 	}
-	if !item.CanMoveTo(next) {
-		return fmt.Errorf("maintenance transition: %w", model.ErrConflict)
-	}
 	if err := s.maintenance.Transition(ctx, id, item.State, next, item.Revision); err != nil {
 		return fmt.Errorf("store maintenance: %w", err)
 	}

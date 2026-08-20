@@ -42,7 +42,7 @@ func (s *ObservatoryService) ListWaveforms(ctx context.Context, stationID string
 	cached, ok := s.waveCache[stationID]
 	s.cacheMu.RUnlock()
 	if ok && len(cached) >= limit {
-		return model.CloneWaveforms(cached[:limit]), nil
+		return cached[:limit], nil
 	}
 	items, err := s.waveforms.ListByStation(ctx, stationID, limit)
 	if err != nil {

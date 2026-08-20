@@ -29,7 +29,7 @@ func (r WaveformRepository) Get(ctx context.Context, id string) (*model.Waveform
 }
 
 func (r WaveformRepository) ListByStation(ctx context.Context, stationID string, limit int) ([]model.Waveform, error) {
-	rows, err := r.db.SQL.QueryContext(ctx, `SELECT id, station_id, captured_at, duration_ms, sample_rate, peak, rms, payload, checksum, state, sequence FROM waveforms WHERE station_id = ? ORDER BY captured_at DESC LIMIT ?`, stationID, limit)
+	rows, err := r.db.SQL.QueryContext(ctx, `SELECT id, station_id, captured_at, duration_ms, sample_rate, peak, rms, payload, checksum, state, sequence FROM waveforms WHERE station_id = ? ORDER BY captured_at ASC LIMIT ?`, stationID, limit)
 	if err != nil {
 		return nil, err
 	}

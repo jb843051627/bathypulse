@@ -15,7 +15,7 @@ func (s *ObservatoryService) IngestWaveform(ctx context.Context, waveform model.
 		return nil, err
 	}
 	if !validation.MatchesChecksum(waveform.Payload, waveform.Checksum) {
-		return nil, model.ErrChecksum
+		return nil, fmt.Errorf("waveform checksum: %v", model.ErrChecksum)
 	}
 	if _, err := s.stations.Get(ctx, waveform.StationID); err != nil {
 		return nil, fmt.Errorf("waveform station: %w", err)

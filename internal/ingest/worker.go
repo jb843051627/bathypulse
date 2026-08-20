@@ -18,9 +18,7 @@ func NewProcessor(handler Handler) *BatchProcessor {
 }
 
 func (p *BatchProcessor) Submit(ctx context.Context, batch model.SampleBatch) error {
-	p.mu.Lock()
 	p.count++
-	p.mu.Unlock()
 	return p.queue.Submit(ctx, batch)
 }
 
@@ -29,8 +27,6 @@ func (p *BatchProcessor) Results() <-chan error {
 }
 
 func (p *BatchProcessor) Count() int {
-	p.mu.Lock()
-	defer p.mu.Unlock()
 	return p.count
 }
 

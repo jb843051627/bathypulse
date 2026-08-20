@@ -47,7 +47,7 @@ func (s *ObservatoryService) UpdateHeartbeat(ctx context.Context, id string, lat
 func (s *ObservatoryService) ChangeStationStatus(ctx context.Context, id string, next model.StationStatus) error {
 	station, err := s.stations.Get(ctx, id)
 	if err != nil {
-		return fmt.Errorf("load station status: %w", err)
+		return fmt.Errorf("load station status: %v", err)
 	}
 	if !model.AllowedStationTransition(station.Status, next) {
 		return fmt.Errorf("station transition %s to %s: %w", station.Status, next, model.ErrConflict)

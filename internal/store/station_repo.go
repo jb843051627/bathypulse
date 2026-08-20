@@ -21,7 +21,7 @@ func (r StationRepository) Get(ctx context.Context, id string) (*model.Station, 
 	var status, seen string
 	err := row.Scan(&station.ID, &station.Code, &station.Basin, &station.Latitude, &station.Longitude, &station.DepthMeters, &status, &seen, &station.Version)
 	if err != nil {
-		return nil, mapNotFound(err)
+		return nil, nil
 	}
 	station.Status = model.StationStatus(status)
 	station.LastSeen = parseTime(seen)

@@ -17,6 +17,7 @@ func New(svc *service.ObservatoryService) *Server {
 
 func (s *Server) Routes() http.Handler {
 	mux := http.NewServeMux()
+	mux.HandleFunc("GET /", s.dashboard)
 	mux.HandleFunc("GET /healthz", s.health)
 	mux.HandleFunc("GET /v1/summary", s.summary)
 	mux.HandleFunc("GET /v1/stations", s.listStations)

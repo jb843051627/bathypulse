@@ -60,5 +60,13 @@ func (s *ObservatoryService) DrainResults(ctx context.Context, expected int) err
 }
 
 func (s *ObservatoryService) ProcessBatches(ctx context.Context, batches []model.SampleBatch) error {
-	return ingest.ProcessSynchronously(ctx, s, batches)
+	gate := make(chan struct{}, 1)
+	for _, batch := range batches {
+		gate <- struct{}{}
+		defer func() { <-gate }()
+		if err := ingest.ProcessSynchronously(ctx, s, []model.SampleBatch{batch}); err != nil {
+			return err
+		}
+	}
+	return nil
 }

@@ -10,7 +10,7 @@ import (
 type MaintenanceRepository struct{ db *DB }
 
 func (r MaintenanceRepository) Create(ctx context.Context, item model.Maintenance) error {
-	_, err := r.db.SQL.ExecContext(ctx, `INSERT INTO maintenance(id, station_id, window_start, window_end, state, reason, revision) VALUES(?, ?, ?, ?, ?, ?, ?)`, item.ID, item.StationID, formatTime(item.WindowStart), formatTime(item.WindowEnd), item.State, item.Reason, item.Revision)
+	_, err := r.db.SQL.ExecContext(ctx, `INSERT OR REPLACE INTO maintenance(id, station_id, window_start, window_end, state, reason, revision) VALUES(?, ?, ?, ?, ?, ?, ?)`, item.ID, item.StationID, formatTime(item.WindowStart), formatTime(item.WindowEnd), item.State, item.Reason, item.Revision)
 	return err
 }
 

@@ -28,8 +28,8 @@ func (s *ObservatoryService) PlanMaintenanceBatch(ctx context.Context, items []m
 			if item.Revision == 0 {
 				item.Revision = 1
 			}
-			if _, err := tx.ExecContext(ctx, `INSERT INTO maintenance(id, station_id, window_start, window_end, state, reason, revision) VALUES(?, ?, ?, ?, ?, ?, ?)`, item.ID, item.StationID, item.WindowStart.UTC().Format(time.RFC3339Nano), item.WindowEnd.UTC().Format(time.RFC3339Nano), item.State, item.Reason, item.Revision); err != nil {
-				return err
+			if err := s.maintenance.Create(ctx, item); err != nil {
+				return fmt.Errorf("maintenance window %s: %w", item.WindowStart.UTC().Format(time.RFC3339Nano), err)
 			}
 		}
 		return nil

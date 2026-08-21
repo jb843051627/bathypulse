@@ -2,6 +2,7 @@ package store
 
 import (
 	"context"
+	"database/sql"
 	"time"
 
 	"github.com/jb843051627/bathypulse/internal/model"
@@ -12,6 +13,13 @@ type MaintenanceRepository struct{ db *DB }
 func (r MaintenanceRepository) Create(ctx context.Context, item model.Maintenance) error {
 	_, err := r.db.SQL.ExecContext(ctx, `INSERT OR REPLACE INTO maintenance(id, station_id, window_start, window_end, state, reason, revision) VALUES(?, ?, ?, ?, ?, ?, ?)`, item.ID, item.StationID, formatTime(item.WindowStart), formatTime(item.WindowEnd), item.State, item.Reason, item.Revision)
 	return err
+}
+
+// CreateTx inserts a maintenance window within an open transaction so that a
+// batch can succeed or fail atomically. Writing through tx (instead of r.db.SQL)
+// is what lets a failed later member roll back earlier members.
+func (r MaintenanceRepository) CreateTx(ctx context.Context, tx *sql.Tx, item model.Maintenance) error {
+	return execTx(ctx, tx, `INSERT OR REPLACE INTO maintenance(id, station_id, window_start, window_end, state, reason, revision) VALUES(?, ?, ?, ?, ?, ?, ?)`, item.ID, item.StationID, formatTime(item.WindowStart), formatTime(item.WindowEnd), item.State, item.Reason, item.Revision)
 }
 
 func (r MaintenanceRepository) Get(ctx context.Context, id string) (*model.Maintenance, error) {

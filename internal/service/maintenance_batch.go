@@ -28,7 +28,7 @@ func (s *ObservatoryService) PlanMaintenanceBatch(ctx context.Context, items []m
 			if item.Revision == 0 {
 				item.Revision = 1
 			}
-			if err := s.maintenance.Create(ctx, item); err != nil {
+			if err := s.maintenance.CreateTx(ctx, tx, item); err != nil {
 				return fmt.Errorf("maintenance window %s: %w", item.WindowStart.UTC().Format(time.RFC3339Nano), err)
 			}
 		}

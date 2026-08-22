@@ -11,7 +11,7 @@ import (
 )
 
 func (s *ObservatoryService) Summary(ctx context.Context) (model.ObservatorySummary, error) {
-	summary, err := s.queries.Summary(context.Background())
+	summary, err := s.queries.Summary(ctx)
 	if err != nil {
 		return summary, err
 	}

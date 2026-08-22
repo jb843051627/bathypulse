@@ -37,7 +37,7 @@ func (s *ObservatoryService) ListEvents(ctx context.Context, stationID string, s
 	cached, ok := s.eventCache[stationID]
 	s.cacheMu.RUnlock()
 	if ok && state == "" {
-		return cached, nil
+		return model.CloneEvents(cached), nil
 	}
 	items, err := s.events.List(ctx, stationID, state)
 	if err != nil {

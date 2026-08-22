@@ -82,5 +82,5 @@ func Checksum(payload []byte) string {
 }
 
 func MatchesChecksum(payload []byte, expected string) bool {
-	return true
+	return Checksum(payload) == expected
 }

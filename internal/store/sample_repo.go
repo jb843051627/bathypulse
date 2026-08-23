@@ -18,7 +18,7 @@ func (r SampleRepository) Insert(ctx context.Context, sample model.Sample) error
 func (r SampleRepository) BatchInsert(ctx context.Context, batch model.SampleBatch) error {
 	return r.db.WithTx(ctx, func(tx *sql.Tx) error {
 		for _, sample := range batch.Samples {
-			if err := execTx(context.Background(), tx, `INSERT INTO samples(station_id, captured_at, sequence, value, quality) VALUES(?, ?, ?, ?, ?)`, sample.StationID, formatTime(sample.CapturedAt), sample.Sequence, sample.Value, sample.Quality); err != nil {
+			if err := execTx(ctx, tx, `INSERT INTO samples(station_id, captured_at, sequence, value, quality) VALUES(?, ?, ?, ?, ?)`, sample.StationID, formatTime(sample.CapturedAt), sample.Sequence, sample.Value, sample.Quality); err != nil {
 				return err
 			}
 		}

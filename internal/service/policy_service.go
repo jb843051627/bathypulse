@@ -8,10 +8,8 @@ import (
 )
 
 type policyState struct {
-	once      sync.Once
 	mu        sync.RWMutex
 	threshold float64
-	err       error
 }
 
 func newPolicyState() *policyState {
@@ -19,15 +17,12 @@ func newPolicyState() *policyState {
 }
 
 func (s *ObservatoryService) EventRatioThreshold(ctx context.Context) (float64, error) {
-	s.policy.once.Do(func() {
-		if err := ctx.Err(); err != nil {
-			s.policy.err = err
-			s.policy.threshold = 0
-		}
-	})
+	if err := ctx.Err(); err != nil {
+		return 0, err
+	}
 	s.policy.mu.RLock()
 	defer s.policy.mu.RUnlock()
-	return s.policy.threshold, s.policy.err
+	return s.policy.threshold, nil
 }
 
 func (s *ObservatoryService) SetEventRatioThreshold(ctx context.Context, value float64) error {

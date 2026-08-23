@@ -9,7 +9,7 @@ import (
 
 func ProcessSynchronously(ctx context.Context, handler Handler, batches []model.SampleBatch) error {
 	for _, batch := range batches {
-		if err := context.Background().Err(); err != nil {
+		if err := ctx.Err(); err != nil {
 			return err
 		}
 		if err := handler.Handle(ctx, batch); err != nil {

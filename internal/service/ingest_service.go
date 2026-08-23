@@ -63,8 +63,9 @@ func (s *ObservatoryService) ProcessBatches(ctx context.Context, batches []model
 	gate := make(chan struct{}, 1)
 	for _, batch := range batches {
 		gate <- struct{}{}
-		defer func() { <-gate }()
-		if err := ingest.ProcessSynchronously(ctx, s, []model.SampleBatch{batch}); err != nil {
+		err := ingest.ProcessSynchronously(ctx, s, []model.SampleBatch{batch})
+		<-gate
+		if err != nil {
 			return err
 		}
 	}
